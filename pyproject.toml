@@ -12,6 +12,7 @@ dependencies = [
     "django-behaviors",
     "djangorestframework",
     "djangorestframework-simplejwt",
+    "djoser",
     "drf-spectacular",
     "drf-spectacular[sidecar]",
     "Pillow",

@@ -16,12 +16,20 @@ black==23.3.0
     # via api-final-yatube (pyproject.toml)
 certifi==2022.12.7
     # via requests
+cffi==1.15.1
+    # via cryptography
 charset-normalizer==3.1.0
     # via requests
 click==8.1.3
     # via black
 columnar==1.4.1
     # via pymarkdownlnt
+cryptography==40.0.2
+    # via social-auth-core
+defusedxml==0.7.1
+    # via
+    #   python3-openid
+    #   social-auth-core
 django==3.2.18
     # via
     #   api-final-yatube (pyproject.toml)
@@ -30,8 +38,10 @@ django==3.2.18
     #   django-testdata
     #   djangorestframework
     #   djangorestframework-simplejwt
+    #   djoser
     #   drf-spectacular
     #   drf-spectacular-sidecar
+    #   social-auth-app-django
 django-behaviors==0.5.1
     # via api-final-yatube (pyproject.toml)
 django-stubs==1.16.0
@@ -40,6 +50,8 @@ django-stubs-ext==0.8.0
     # via
     #   api-final-yatube (pyproject.toml)
     #   django-stubs
+django-templated-mail==1.1.1
+    # via djoser
 django-testdata==1.0.3
     # via api-final-yatube (pyproject.toml)
 djangorestframework==3.14.0
@@ -48,6 +60,10 @@ djangorestframework==3.14.0
     #   djangorestframework-simplejwt
     #   drf-spectacular
 djangorestframework-simplejwt==5.2.2
+    # via
+    #   api-final-yatube (pyproject.toml)
+    #   djoser
+djoser==2.2.0
     # via api-final-yatube (pyproject.toml)
 drf-spectacular[sidecar]==0.26.2
     # via api-final-yatube (pyproject.toml)
@@ -86,6 +102,10 @@ mypy-extensions==1.0.0
     #   api-final-yatube (pyproject.toml)
     #   black
     #   mypy
+oauthlib==3.2.2
+    # via
+    #   requests-oauthlib
+    #   social-auth-core
 packaging==23.1
     # via
     #   black
@@ -102,12 +122,15 @@ pluggy==1.0.0
     # via pytest
 pycodestyle==2.7.0
     # via flake8
+pycparser==2.21
+    # via cffi
 pyflakes==2.3.1
     # via flake8
 pyjwt==2.6.0
     # via
     #   api-final-yatube (pyproject.toml)
     #   djangorestframework-simplejwt
+    #   social-auth-core
 pymarkdownlnt==0.9.11
     # via api-final-yatube (pyproject.toml)
 pyrsistent==0.19.3
@@ -118,6 +141,8 @@ pytest==7.3.1
     #   pytest-django
 pytest-django==4.5.2
     # via api-final-yatube (pyproject.toml)
+python3-openid==3.2.0
+    # via social-auth-core
 pytz==2023.3
     # via
     #   django
@@ -125,7 +150,16 @@ pytz==2023.3
 pyyaml==6.0
     # via drf-spectacular
 requests==2.28.2
-    # via api-final-yatube (pyproject.toml)
+    # via
+    #   api-final-yatube (pyproject.toml)
+    #   requests-oauthlib
+    #   social-auth-core
+requests-oauthlib==1.3.1
+    # via social-auth-core
+social-auth-app-django==5.2.0
+    # via djoser
+social-auth-core==4.4.2
+    # via social-auth-app-django
 sqlparse==0.4.4
     # via django
 tomli==2.0.1

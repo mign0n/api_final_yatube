@@ -5,13 +5,27 @@
 #    pip-compile --output-file=requirements.txt --resolver=backtracking pyproject.toml
 #
 asgiref==3.6.0
-    # via django
+    # via
+    #   django
+    #   djoser
 attrs==23.1.0
     # via jsonschema
 certifi==2022.12.7
     # via requests
+cffi==1.15.1
+    # via cryptography
 charset-normalizer==2.0.12
     # via requests
+coreapi==2.3.3
+    # via djoser
+coreschema==0.0.4
+    # via coreapi
+cryptography==40.0.2
+    # via social-auth-core
+defusedxml==0.7.1
+    # via
+    #   python3-openid
+    #   social-auth-core
 django==3.2.18
     # via
     #   api-final-yatube (pyproject.toml)
@@ -21,12 +35,18 @@ django==3.2.18
     #   drf-spectacular-sidecar
 django-behaviors==0.5.1
     # via api-final-yatube (pyproject.toml)
+django-templated-mail==1.1.1
+    # via djoser
 djangorestframework==3.12.4
     # via
     #   api-final-yatube (pyproject.toml)
     #   djangorestframework-simplejwt
     #   drf-spectacular
 djangorestframework-simplejwt==4.7.2
+    # via
+    #   api-final-yatube (pyproject.toml)
+    #   djoser
+djoser==2.1.0
     # via api-final-yatube (pyproject.toml)
 drf-spectacular[sidecar]==0.26.2
     # via api-final-yatube (pyproject.toml)
@@ -36,25 +56,54 @@ idna==3.4
     # via requests
 inflection==0.5.1
     # via drf-spectacular
+itypes==1.2.0
+    # via coreapi
+jinja2==3.1.2
+    # via coreschema
 jsonschema==4.17.3
     # via drf-spectacular
+markupsafe==2.1.2
+    # via jinja2
+oauthlib==3.2.2
+    # via
+    #   requests-oauthlib
+    #   social-auth-core
 pillow==9.3.0
     # via api-final-yatube (pyproject.toml)
+pycparser==2.21
+    # via cffi
 pyjwt==2.1.0
     # via
     #   api-final-yatube (pyproject.toml)
     #   djangorestframework-simplejwt
+    #   social-auth-core
 pyrsistent==0.19.3
     # via jsonschema
+python3-openid==3.2.0
+    # via social-auth-core
 pytz==2023.3
     # via django
 pyyaml==6.0
     # via drf-spectacular
 requests==2.26.0
-    # via api-final-yatube (pyproject.toml)
+    # via
+    #   api-final-yatube (pyproject.toml)
+    #   coreapi
+    #   requests-oauthlib
+    #   social-auth-core
+requests-oauthlib==1.3.1
+    # via social-auth-core
+six==1.16.0
+    # via social-auth-app-django
+social-auth-app-django==4.0.0
+    # via djoser
+social-auth-core==4.4.2
+    # via social-auth-app-django
 sqlparse==0.4.4
     # via django
 uritemplate==4.1.1
-    # via drf-spectacular
+    # via
+    #   coreapi
+    #   drf-spectacular
 urllib3==1.26.15
     # via requests
