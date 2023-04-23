@@ -1,9 +1,10 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from api.views import CommentViewSet, PostViewSet
+from api.views import CommentViewSet, GroupViewSet, PostViewSet
 
 router = DefaultRouter()
+router.register('groups', GroupViewSet)
 router.register('posts', PostViewSet)
 router.register(
     'posts/(?P<post_id>.+)/comments',
