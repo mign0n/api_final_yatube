@@ -1,7 +1,8 @@
 from django.db.models import QuerySet
 from rest_framework import serializers, viewsets
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, \
+    IsAuthenticatedOrReadOnly
 
 from api.permissions import IsAuthorOrReadOnly
 from api.serializers import (
@@ -21,7 +22,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (IsAuthorOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly)
 
     def perform_create(self, serializer: serializers.ModelSerializer) -> None:
         serializer.save(author=self.request.user)
