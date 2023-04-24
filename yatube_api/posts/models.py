@@ -1,11 +1,6 @@
 from django.db import models
 
-from yatube_api.models import (
-    PREVIEW_LENGTH,
-    AuthorBaseModel,
-    TextBaseModel,
-    User,
-)
+from yatube_api.models import PREVIEW_LENGTH, TextBaseModel, User
 from yatube_api.utils import cut_text
 
 
