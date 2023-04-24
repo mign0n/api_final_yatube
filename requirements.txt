@@ -72,7 +72,7 @@ pillow==9.3.0
     # via api-final-yatube (pyproject.toml)
 pycparser==2.21
     # via cffi
-pyjwt==2.1.0
+pyjwt==2.4.0
     # via
     #   api-final-yatube (pyproject.toml)
     #   djangorestframework-simplejwt
