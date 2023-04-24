@@ -64,7 +64,13 @@ class Comment(TextBaseModel):
         default_related_name = 'comments'
 
 
-class Follow(AuthorBaseModel):
+class Follow(models.Model):
+    following = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='автор',
+        help_text='Автор',
+    )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
