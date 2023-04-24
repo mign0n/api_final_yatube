@@ -1,8 +1,10 @@
 from django.db.models import QuerySet
 from rest_framework import serializers, viewsets
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated, \
-    IsAuthenticatedOrReadOnly
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+)
 
 from api.permissions import IsAuthorOrReadOnly
 from api.serializers import (
