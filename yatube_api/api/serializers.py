@@ -41,6 +41,14 @@ class FollowSerializer(serializers.ModelSerializer):
     user = SlugRelatedField(slug_field='username', read_only=True)
     following = SlugRelatedField(slug_field='username', read_only=True)
 
+    def validate(self, data: dict) -> dict:
+        if (
+            not isinstance(self.initial_data.get('following'), str)
+            or self.initial_data['following'] == ''
+        ):
+            raise serializers.ValidationError('Не верное значение')
+        return data
+
     class Meta:
         fields = ('user', 'following')
         model = Follow

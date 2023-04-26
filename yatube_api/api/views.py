@@ -1,5 +1,5 @@
-from django.db.models import QuerySet
-from rest_framework import serializers, viewsets, filters
+from django.db.models import Model, QuerySet
+from rest_framework import filters, serializers, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import (
     IsAuthenticated,
@@ -59,17 +59,21 @@ class FollowViewSet(viewsets.ModelViewSet):
         return Follow.objects.filter(user=self.request.user)
 
     @property
-    def get_author(self) -> QuerySet:
-        return get_object_or_404(
-            User,
-            username=self.request.data.get('following'),
-        )
+    def get_author(self) -> Model:
+        author = self.request.data.get('following')
+        if not User.objects.filter(username=author).exists():
+            raise serializers.ValidationError(
+                f'Объект с username={author} не существует.',
+            )
+        return User.objects.get(username=author)
 
     def perform_create(self, serializer: serializers.ModelSerializer) -> None:
-        if (
-            self.get_author != self.request.user
-            and not self.get_queryset().filter(
-                following=self.get_author,
-            ).exists()
-        ):
-            serializer.save(following=self.get_author, user=self.request.user)
+        if self.get_queryset().filter(following=self.get_author).exists():
+            raise serializers.ValidationError(
+                'Подписка на этого пользователя уже существует.',
+            )
+        if self.get_author == self.request.user:
+            raise serializers.ValidationError(
+                'Нельзя подписаться на самого себя!',
+            )
+        serializer.save(following=self.get_author, user=self.request.user)
