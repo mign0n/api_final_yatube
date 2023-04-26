@@ -82,3 +82,6 @@ norecursedirs = ["venv/*"]
 addopts = "-vv -p no:cacheprovider"
 testpaths = ["tests/"]
 python_files = ["test_*.py"]
+filterwarnings = [
+    'ignore:pkg_resources is deprecated as an API:DeprecationWarning',
+]
