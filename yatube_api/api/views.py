@@ -1,5 +1,5 @@
 from django.db.models import QuerySet
-from rest_framework import serializers, viewsets
+from rest_framework import serializers, viewsets, filters
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import (
     IsAuthenticated,
@@ -50,9 +50,13 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class FollowViewSet(viewsets.ModelViewSet):
-    queryset = Follow.objects.all()
     serializer_class = FollowSerializer
     permission_classes = (IsAuthenticated, IsAuthorOrReadOnly)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('following__username',)
+
+    def get_queryset(self) -> QuerySet:
+        return Follow.objects.filter(user=self.request.user)
 
     @property
     def get_author(self) -> QuerySet:
@@ -64,9 +68,8 @@ class FollowViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer: serializers.ModelSerializer) -> None:
         if (
             self.get_author != self.request.user
-            and not self.queryset.filter(
+            and not self.get_queryset().filter(
                 following=self.get_author,
-                user=self.request.user,
             ).exists()
         ):
             serializer.save(following=self.get_author, user=self.request.user)
