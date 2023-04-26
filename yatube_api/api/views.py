@@ -14,6 +14,7 @@ from api.serializers import (
     PostSerializer,
 )
 from posts.models import Follow, Group, Post
+from yatube_api.models import User
 
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
@@ -52,3 +53,20 @@ class FollowViewSet(viewsets.ModelViewSet):
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
     permission_classes = (IsAuthenticated, IsAuthorOrReadOnly)
+
+    @property
+    def get_author(self) -> QuerySet:
+        return get_object_or_404(
+            User,
+            username=self.request.data.get('following'),
+        )
+
+    def perform_create(self, serializer: serializers.ModelSerializer) -> None:
+        if (
+            self.get_author != self.request.user
+            and not self.queryset.filter(
+                following=self.get_author,
+                user=self.request.user,
+            ).exists()
+        ):
+            serializer.save(following=self.get_author, user=self.request.user)
