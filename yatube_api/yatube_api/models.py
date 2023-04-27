@@ -38,7 +38,7 @@ class TextBaseModel(TimeStampedModel):
 
     class Meta:
         abstract = True
-        ordering = ('-pub_date',)
+        ordering = ('pub_date',)
         default_related_name = '%(class)s'
 
     def __str__(self) -> str:
