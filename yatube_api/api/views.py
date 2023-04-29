@@ -16,6 +16,7 @@ from api.serializers import (
     PostSerializer,
 )
 from posts.models import Follow, Group, Post
+from yatube_api.api.views import CreateListViewSet
 from yatube_api.models import User
 
 
@@ -52,7 +53,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         )
 
 
-class FollowViewSet(viewsets.ModelViewSet):
+class FollowViewSet(CreateListViewSet):
     serializer_class = FollowSerializer
     permission_classes = (IsAuthenticated, IsAuthorOrReadOnly)
     filter_backends = (filters.SearchFilter,)
