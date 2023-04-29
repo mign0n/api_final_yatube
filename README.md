@@ -44,8 +44,8 @@ make test
 make run
 ```
 
-- Перейдите по адресу `127.0.0.1:8000/redoc`. Эта страница содержит
-документацию по API.
+- Перейдите по адресу `127.0.0.1:8000/api/v1/doc`. Эта страница содержит
+интерактивную документацию по API.
 
 - С помощью панели администратора Django создайте пользователя c именем <ИМЯПОЛЬЗОВАТЕЛЯ>
 и паролем <ВАШСТОЙКИЙПАРОЛЬ>.
@@ -68,26 +68,9 @@ curl --header "content-type:application/json" \
 
 ## Примеры запросов
 
-1. Создание публикации (POST /api/v1/posts/)
+HTTP-запросы можно отправлять прямо со страницы документации
+`127.0.0.1:8000/api/v1/doc`.
 
-```shell
-curl --header "content-type:application/json" \
---header "authorization: Bearer <ВАШ-ТОКЕН-ДОСТУПА>" \
---data '{"text": "Текст вашей публикации"}' \
---request POST http://127.0.0.1:8000/api/v1/posts/
-```
-
-1. Получение списка публикаций (GET /api/v1/posts/)
-
-```shell
-curl --header "content-type:application/json" \
---request GET http://127.0.0.1:8000/api/v1/posts/
-```
-
-1. Удаление публикации (DELETE /api/v1/posts/{id}/)
-
-```shell
-curl --header "content-type:application/json" \
---header "authorization: Bearer <ВАШ-ТОКЕН-ДОСТУПА>" \
---request DELETE http://127.0.0.1:8000/api/v1/posts/1/
-```
+Используйте полученный токен в заголовках запросов, либо авторизуйтесь с
+помощью кнопки '__Authorize__' на странице документации и введите
+`<ВАШ-ТОКЕН-ДОСТУПА>` в поле 'Value'.

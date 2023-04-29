@@ -1,4 +1,9 @@
 from django.urls import include, path
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
+)
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
 from api.views import CommentViewSet, FollowViewSet, GroupViewSet, PostViewSet
@@ -16,4 +21,15 @@ urlpatterns = [
     path('', include('djoser.urls')),
     path('', include('djoser.urls.jwt')),
     path('posts/<int:post_id>/', include(comments_router.urls)),
+    path('doc/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path(
+        'doc/',
+        SpectacularSwaggerView.as_view(url_name='api:schema'),
+        name='doc',
+    ),
+    path(
+        'redoc/',
+        SpectacularRedocView.as_view(url_name='api:schema'),
+        name='redoc',
+    ),
 ]

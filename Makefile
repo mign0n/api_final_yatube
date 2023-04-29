@@ -10,10 +10,13 @@ deps:
 dev-deps: deps
 	pip-compile --extra=dev --output-file $(DEVREQS) --resolver=backtracking pyproject.toml
 
+gen-schema:
+	$(MANAGE) spectacular --color --file $(WORKDIR)/schema.yml
+
 install:
 	python -m venv venv 
 	venv/bin/pip install --upgrade pip
-	venv/bin/pip install -r dev-requirements.txt
+	venv/bin/pip install -r $(DEVREQS)
 	venv/bin/$(MANAGE) migrate
 
 install-deps: deps
