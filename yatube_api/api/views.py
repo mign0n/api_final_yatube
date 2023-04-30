@@ -1,4 +1,4 @@
-from django.db.models import Model, QuerySet
+from django.db.models import QuerySet
 from django.utils.functional import cached_property
 from rest_framework import filters, serializers, viewsets
 from rest_framework.generics import get_object_or_404
@@ -62,22 +62,11 @@ class FollowViewSet(CreateListViewSet):
     def get_queryset(self) -> QuerySet:
         return Follow.objects.filter(user=self.request.user)
 
-    @property
-    def get_author(self) -> Model:
-        author = self.request.data.get('following')
-        if not User.objects.filter(username=author).exists():
-            raise serializers.ValidationError(
-                f'Объект с username={author} не существует.',
-            )
-        return User.objects.get(username=author)
-
     def perform_create(self, serializer: serializers.ModelSerializer) -> None:
-        if self.get_queryset().filter(following=self.get_author).exists():
-            raise serializers.ValidationError(
-                'Подписка на этого пользователя уже существует.',
-            )
-        if self.get_author == self.request.user:
-            raise serializers.ValidationError(
-                'Нельзя подписаться на самого себя!',
-            )
-        serializer.save(following=self.get_author, user=self.request.user)
+        serializer.save(
+            following=get_object_or_404(
+                User,
+                username=self.request.data.get('following'),
+            ),
+            user=self.request.user,
+        )

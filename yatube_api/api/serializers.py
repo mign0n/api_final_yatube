@@ -1,7 +1,9 @@
+from django.db.models import Model
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 
 from posts.models import Comment, Follow, Group, Post
+from yatube_api.models import User
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -39,15 +41,31 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class FollowSerializer(serializers.ModelSerializer):
     user = SlugRelatedField(slug_field='username', read_only=True)
-    following = SlugRelatedField(slug_field='username', read_only=True)
+    following = SlugRelatedField(
+        slug_field='username',
+        required=True,
+        queryset=User.objects.all(),
+    )
 
-    def validate(self, data: dict) -> dict:
-        if (
-            not isinstance(self.initial_data.get('following'), str)
-            or self.initial_data['following'] == ''
-        ):
-            raise serializers.ValidationError('Не верное значение')
-        return data
+    def validate_following(self, value: str) -> str:
+        user = self.context.get('request').user
+        if Follow.objects.filter(
+            following__exact=value,
+            user__exact=user,
+        ).exists():
+            raise serializers.ValidationError(
+                'Подписка на этого пользователя уже существует.',
+            )
+        if value == user:
+            raise serializers.ValidationError(
+                'Нельзя подписаться на самого себя!',
+            )
+        return value
+
+    def to_representation(self, instance: Model) -> dict:
+        representation = super().to_representation(instance)
+        representation['user'] = instance.user.username
+        return representation
 
     class Meta:
         fields = ('user', 'following')
