@@ -85,7 +85,7 @@ pytz==2023.3
     # via django
 pyyaml==6.0
     # via drf-spectacular
-requests==2.26.0
+requests==2.31.0
     # via
     #   api-final-yatube (pyproject.toml)
     #   coreapi
