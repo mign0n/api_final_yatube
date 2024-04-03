@@ -68,7 +68,7 @@ oauthlib==3.2.2
     # via
     #   requests-oauthlib
     #   social-auth-core
-pillow==9.3.0
+pillow==10.3.0
     # via api-final-yatube (pyproject.toml)
 pycparser==2.21
     # via cffi
