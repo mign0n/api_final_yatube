@@ -81,7 +81,7 @@ flake8-annotations==2.9.1
     # via api-final-yatube (pyproject.toml)
 flake8-commas==2.1.0
     # via api-final-yatube (pyproject.toml)
-idna==3.4
+idna==3.7
     # via requests
 inflection==0.5.1
     # via drf-spectacular
